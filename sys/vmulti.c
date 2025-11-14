@@ -1,4 +1,4 @@
-#include <vmulti.h>
+#include "vmulti.h"
 
 //
 // Globals
@@ -223,8 +223,8 @@ VMultiEvtWdmPreprocessMnQueryId(
                 // HIDClass is asking for child deviceid & hardwareids.
                 // Let us just make up some id for our child device.
                 //
-                buffer = (PWCHAR)ExAllocatePoolWithTag(
-                        NonPagedPool,
+                buffer = (PWCHAR)ExAllocatePool2(
+                        POOL_FLAG_NON_PAGED,
                         VMULTI_HARDWARE_IDS_LENGTH,
                         VMULTI_POOL_TAG
                         );
@@ -921,6 +921,8 @@ VMultiSetFeature(
     PHID_XFER_PACKET transferPacket = NULL;
     VMultiFeatureReport* pReport = NULL;
 
+    UNREFERENCED_PARAMETER(CompleteRequest);
+
     VMultiPrint(DEBUG_LEVEL_VERBOSE, DBG_IOCTL,
         "VMultiSetFeature Entry\n");
 
@@ -1005,6 +1007,7 @@ VMultiGetFeature(
     NTSTATUS status = STATUS_SUCCESS;
     WDF_REQUEST_PARAMETERS params;
     PHID_XFER_PACKET transferPacket = NULL;
+    UNREFERENCED_PARAMETER(CompleteRequest);
 
     VMultiPrint(DEBUG_LEVEL_VERBOSE, DBG_IOCTL,
         "VMultiGetFeature Entry\n");

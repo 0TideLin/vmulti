@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include <windows.h>
 #include <hidsdi.h>
 #include <setupapi.h>
@@ -5,6 +6,10 @@
 #include <stdlib.h>
 
 #include "vmulticlient.h"
+
+#ifdef __cpluplus
+extern "C"{
+#endif
 
 #if __GNUC__
     #define __in
@@ -515,7 +520,7 @@ OpenDeviceInterface (
 
     file = CreateFile ( deviceInterfaceDetailData->DevicePath,
                             GENERIC_READ | GENERIC_WRITE,
-                            FILE_SHARE_READ | FILE_SHARE_READ,
+                            FILE_SHARE_READ | FILE_SHARE_WRITE,
                             NULL, // no SECURITY_ATTRIBUTES structure
                             OPEN_EXISTING, // No special create flags
                             0, // No special attributes
@@ -625,3 +630,7 @@ HidOutput(
 
     return TRUE;
 }
+
+#ifdef __cpluplus
+}
+#endif
